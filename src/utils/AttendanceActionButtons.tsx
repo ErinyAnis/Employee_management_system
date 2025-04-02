@@ -33,7 +33,7 @@ const AttendanceActionButtons = ({
       try {
         const response = await axios.put(
           `${import.meta.env.VITE_BACKEND_URL}/api/attendance/update/${employeeId}`,
-          { status },
+          { status: newStatus },
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
