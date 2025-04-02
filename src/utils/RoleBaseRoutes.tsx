@@ -19,7 +19,7 @@ const RoleBaseRoutes = ({ children, requiredRole }: Props) => {
 
   // requiredRole will be an array and will pass the role to it
   if (!requiredRole.includes(user?.role)) {
-    <Navigate to="/unauthorized" />;
+    return <Navigate to="/unauthorized" />;
   }
 
   return user ? children : <Navigate to="/login" />;

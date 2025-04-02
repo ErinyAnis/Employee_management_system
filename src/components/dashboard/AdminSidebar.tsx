@@ -1,8 +1,10 @@
 import {
   FaBuilding,
-  FaCalendarAlt,
   FaCogs,
   FaMoneyBillWave,
+  FaRegCalendarAlt,
+  FaRegFileAlt,
+  FaSignOutAlt,
   FaTachometerAlt,
   FaUsers,
 } from "react-icons/fa";
@@ -10,8 +12,7 @@ import SidebarLink from "../ui/SidebarLink";
 
 const AdminSidebar = () => {
   return (
-    <div className="bg-gray-800 text-white min-h-screen space-y-2 w-15 lg:w-64 py-2">
-
+    <div className="min-h-screen w-15 space-y-2 bg-gray-800 py-2 text-white lg:w-64">
       <div>
         <SidebarLink Icon={FaTachometerAlt} link="/admin-dashboard">
           Dashboard
@@ -22,11 +23,20 @@ const AdminSidebar = () => {
         <SidebarLink Icon={FaBuilding} link="/admin-dashboard/departments">
           Departments
         </SidebarLink>
-        <SidebarLink Icon={FaCalendarAlt} link="/admin-dashboard/leaves">
+        <SidebarLink Icon={FaSignOutAlt} link="/admin-dashboard/leaves">
           Leaves
         </SidebarLink>
         <SidebarLink Icon={FaMoneyBillWave} link="/admin-dashboard/salary/add">
           Salary
+        </SidebarLink>
+        <SidebarLink Icon={FaRegCalendarAlt} link="/admin-dashboard/attendance">
+          Attendance
+        </SidebarLink>
+        <SidebarLink
+          Icon={FaRegFileAlt}
+          link="/admin-dashboard/attendance-report"
+        >
+          Attendance Report
         </SidebarLink>
         <SidebarLink Icon={FaCogs} link="/admin-dashboard/setting">
           Setting

@@ -11,6 +11,7 @@ interface IProps {
   leave?: boolean;
   filterByButton?: (status: "Pending" | "Approved" | "Rejected") => void;
   LeaveDiableBtnForAdmin?: boolean;
+  attendance?: boolean;
 }
 
 const ListHeading = ({
@@ -22,13 +23,16 @@ const ListHeading = ({
   leave,
   filterByButton,
   LeaveDiableBtnForAdmin,
+  attendance,
 }: IProps) => {
   const { user } = useAuth();
 
   return (
     <>
       <div className="text-center">
-        <h3 className="mb-5 text-2xl font-bold">{title}</h3>
+        <h3 className="mb-5 text-xl font-bold lg:mb-8 lg:text-[28px]">
+          {title}
+        </h3>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-2">
         <input
@@ -37,6 +41,14 @@ const ListHeading = ({
           placeholder={inputPlaceholder}
           className="text-14px rounded border border-gray-400 bg-white px-2 py-1.5 transition focus:border-gray-700 lg:px-3 lg:py-2 lg:text-[15px]"
         />
+
+        {attendance && (
+          <h2 className="text-lg font-semibold lg:text-xl">
+            Mark Attendance for
+            <span className="text-gray-600 ml-2">{new Date().toISOString().split("T")[0]}</span>
+          </h2>
+        )}
+
         {leave ? (
           <div className="flex flex-wrap gap-2">
             <Btn

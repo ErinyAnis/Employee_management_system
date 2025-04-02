@@ -24,6 +24,9 @@ import AddLeave from "./components/leaves/Add";
 import Setting from "./components/EmployeeDashboard/Setting";
 import Table from "./components/leaves/Table";
 import Detail from "./components/leaves/Detail";
+import Unauthorized from "./components/Unauthorized";
+import Attendance from "./components/attendance/Attendance";
+import AttendanceReport from "./components/attendance/AttendanceReport";
 
 function App() {
   return (
@@ -77,10 +80,7 @@ function App() {
             ></Route>
 
             {/* leaves */}
-            <Route
-              path="/admin-dashboard/leaves"
-              element={<Table />}
-            ></Route>
+            <Route path="/admin-dashboard/leaves" element={<Table />}></Route>
             <Route
               path="/admin-dashboard/leaves/:id"
               element={<Detail />}
@@ -96,12 +96,22 @@ function App() {
               element={<AddSalary />}
             ></Route>
 
+            {/* Attendance */}
+            <Route
+              path="/admin-dashboard/attendance"
+              element={<Attendance />}
+            ></Route>
+            {/* Attendance report */}
+            <Route
+              path="/admin-dashboard/attendance-report"
+              element={<AttendanceReport />}
+            ></Route>
+
             {/* setting */}
             <Route
               path="/admin-dashboard/setting"
               element={<Setting />}
             ></Route>
-
           </Route>
 
           {/* employee */}
@@ -150,6 +160,7 @@ function App() {
               element={<Setting />}
             ></Route>
           </Route>
+          <Route path="/unauthorized" element={<Unauthorized />}></Route>
         </Routes>
       </BrowserRouter>
       <ToastContainer />

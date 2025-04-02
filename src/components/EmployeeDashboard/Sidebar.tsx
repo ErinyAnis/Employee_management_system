@@ -1,7 +1,7 @@
 import {
-  FaCalendarAlt,
   FaCogs,
   FaMoneyBillWave,
+  FaSignOutAlt,
   FaTachometerAlt,
   FaUserCircle,
 } from "react-icons/fa";
@@ -24,7 +24,7 @@ const Sidebar = () => {
           My Profile
         </SidebarLink>
         <SidebarLink
-          Icon={FaCalendarAlt}
+          Icon={FaSignOutAlt}
           link={`/employee-dashboard/leaves/${user?._id}`}
         >
           Leaves
