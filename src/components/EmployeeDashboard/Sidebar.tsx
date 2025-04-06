@@ -12,7 +12,7 @@ const Sidebar = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen w-15 space-y-2 bg-gray-800 py-2 text-white lg:w-64">
+    <div className="min-h-screen w-15 space-y-2 bg-gray-800 py-2 text-white lg:w-60 xl:w-64">
       <div>
         <SidebarLink Icon={FaTachometerAlt} link="/employee-dashboard">
           Dashboard

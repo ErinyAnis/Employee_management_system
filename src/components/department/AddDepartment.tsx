@@ -4,30 +4,33 @@ import { toast } from "react-toastify";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import Container from "../ui/Container";
+import { departmentSchema, TDepartmentSchema } from "../../../lib/types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const AddDepartment = () => {
-  const [department, setDepartment] = useState({
-    dep_name: "",
-    description: "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<TDepartmentSchema>({
+    resolver: zodResolver(departmentSchema),
+    defaultValues: {
+      dep_name: "",
+      description: "",
+    },
   });
+
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setDepartment({ ...department, [name]: value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (data: TDepartmentSchema) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/department/add`,
-        department,
+        data,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -36,6 +39,7 @@ const AddDepartment = () => {
       );
 
       if (response.data.success) {
+        toast.success("Department added successfully");
         navigate("/admin-dashboard/departments");
       }
     } catch (error) {
@@ -55,35 +59,44 @@ const AddDepartment = () => {
       ) : (
         <div className="mx-auto mt-10 w-96 max-w-3xl rounded-md bg-white p-8 shadow-md">
           <h2 className="mb-6 text-2xl font-bold">Add New Department</h2>
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <div>
               <label htmlFor="dep_name" className="label">
                 Department Name
               </label>
               <input
-                onChange={handleChange}
                 type="text"
                 placeholder="Enter Dep Name"
-                name="dep_name"
                 id="dep_name"
                 className="input"
-                required
+                {...register("dep_name")}
               />
+              {errors.dep_name && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.dep_name.message}
+                </p>
+              )}
             </div>
             <div>
               <label htmlFor="description" className="label">
                 Description
               </label>
               <textarea
-                onChange={handleChange}
-                name="description"
                 placeholder="Description"
                 className="textArea"
                 id="description"
                 rows={4}
+                {...register("description")}
               ></textarea>
+              {errors.description && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.description.message}
+                </p>
+              )}
             </div>
-            <Btn className="mt-6 w-full">Add Department</Btn>
+            <Btn className="mt-6 w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Adding..." : "Add Department"}
+            </Btn>
           </form>
         </div>
       )}

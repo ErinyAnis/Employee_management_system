@@ -8,23 +8,28 @@ import { Employee } from "../../types/Employee";
 import { fetchDepartments } from "../../utils/fetchDepartments";
 import { Department } from "../../types/Department";
 import { fetchEmployees } from "../../utils/fetchEmployees";
-import { Salary } from "../../types/Salary";
-
-
+import { salarySchema, TSalarySchema } from "../../../lib/types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const AddSalary = () => {
   const navigate = useNavigate();
-  const [salary, setSalary] = useState<Salary>({
-    employeeId: "",
-    basicSalary: 0,
-    allowances: 0,
-    deductions: 0,
-    payDate: "",
-  });
   const [departments, setDepartments] = useState<Department[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]); //List of employees in selected department
-  const [selectedDepartment, setSelectedDepartment] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<TSalarySchema>({
+    resolver: zodResolver(salarySchema),
+    mode: "onBlur",
+  });
+
+  const selectedDepartment = watch("departmentId");
 
   // Get departments on component mount
   useEffect(() => {
@@ -43,57 +48,31 @@ const AddSalary = () => {
     fetchData();
   }, []);
 
-  const handleDepartmentChange = async (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const departmentId = e.target.value;
-    setSelectedDepartment(departmentId);
+  // Fetch employees when department changes
+  useEffect(() => {
+    const fetchEmployeesByDepartment = async () => {
+      if (!selectedDepartment) return;
 
-    // Preserve current salary data
-    const currentSalaryData = { ...salary };
-
-    try {
-      const emps = await fetchEmployees(departmentId);
-      if (emps.length < 0) {
+      try {
+        const emps = await fetchEmployees(selectedDepartment);
+        setEmployees(emps || []);
+        // Reset employee selection when department changes
+        setValue("employeeId", "");
+      } catch (error) {
+        console.log(error);
         setEmployees([]);
-      } else {
-        setEmployees(emps);
+        toast.error("Failed to fetch employees");
       }
+    };
 
-      // Restore salary data after department change
-      setSalary(currentSalaryData);
-    } catch (error) {
-      console.log(error);
-      setEmployees([]);
-      toast.error("Failed to fetch employees");
-    }
-  };
+    fetchEmployeesByDepartment();
+  }, [selectedDepartment, setValue]);
 
-  const handleEmployeeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const employeeId = e.target.value;
-    const selected = employees.find((emp) => emp._id === employeeId) || null;
-    setSalary((prev) => ({
-      ...prev,
-      employeeId,
-      basicSalary: selected?.salary || 0,
-    }));
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setSalary((prev) => ({
-      ...prev,
-      [name]: name === "payDate" ? value: value === "" ? 0  : Number(value),
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async (data: TSalarySchema) => {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/salary/add`,
-        salary,
+        data,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -115,28 +94,22 @@ const AddSalary = () => {
   };
 
   return (
-    <Container className="mt-5 rounded-md bg-white p-8 shadow-md mx-3 lg:mx-5">
+    <Container className="mx-3 mt-5 rounded-md bg-white p-8 shadow-md lg:mx-5">
       <h2 className="mb-6 text-2xl font-bold">Add Salary</h2>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Department */}
             <div>
-              <label
-                htmlFor="department"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="department" className="label">
                 Department
               </label>
               <select
-                name="department"
-                onChange={handleDepartmentChange}
-                value={selectedDepartment}
+                {...register("departmentId")}
                 id="department"
-                className="mt-1 block w-full cursor-pointer rounded-md border border-gray-300 p-2 transition focus:border-gray-500"
-                required
+                className="select"
               >
                 <option value="" disabled>
                   Select Department
@@ -147,22 +120,22 @@ const AddSalary = () => {
                   </option>
                 ))}
               </select>
+              {errors.departmentId && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.departmentId.message}
+                </p>
+              )}
             </div>
 
             {/* Employee */}
             <div>
-              <label
-                htmlFor="employee"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="employee" className="label">
                 Employee
               </label>
               <select
-                name="employeeId"
-                onChange={handleEmployeeSelect}
-                value={salary.employeeId}
+                {...register("employeeId")}
                 id="employee"
-                className="mt-1 block w-full cursor-pointer rounded-md border border-gray-300 p-2 transition focus:border-gray-500"
+                className="select"
                 required
                 disabled={!employees.length}
               >
@@ -177,68 +150,74 @@ const AddSalary = () => {
                   </option>
                 ))}
               </select>
+              {errors.employeeId && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.employeeId.message}
+                </p>
+              )}
             </div>
 
             {/* Basic Salary */}
             <div>
-              <label
-                htmlFor="basicSalary"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="basicSalary" className="label">
                 Basic Salary
               </label>
               <input
                 type="number"
-                name="basicSalary"
-                value={salary.basicSalary? salary.basicSalary: ""}
-                onChange={handleChange}
                 id="basicSalary"
-                placeholder="basicSalary"
-                className="mt-1 block w-full rounded-md border border-gray-300 p-2 transition focus:border-gray-500"
-                required
-                min="0"
+                placeholder="Basic Salary"
+                className="input"
+                {...register("basicSalary", {
+                  valueAsNumber: true,
+                })}
               />
+              {errors.basicSalary && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.basicSalary.message}
+                </p>
+              )}
             </div>
 
             {/* Allowances */}
             <div>
-              <label
-                htmlFor="allowances"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="allowances" className="label">
                 Allowances
               </label>
               <input
                 type="number"
-                name="allowances"
-                value={salary.allowances}
-                onChange={handleChange}
                 id="allowances"
-                placeholder="allowances"
-                className="mt-1 block w-full rounded-md border border-gray-300 p-2 transition focus:border-gray-500"
-                required
+                placeholder="Allowances"
+                className="input"
+                {...register("allowances", {
+                  valueAsNumber: true,
+                })}
               />
+              {errors.allowances && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.allowances.message}
+                </p>
+              )}
             </div>
 
             {/* Deductions */}
             <div>
-              <label
-                htmlFor="deductions"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="deductions" className="label">
                 Deductions
               </label>
               <input
                 type="number"
-                name="deductions"
-                value={salary.deductions}
-                onChange={handleChange}
                 id="deductions"
-                placeholder="deductions"
-                className="mt-1 block w-full rounded-md border border-gray-300 p-2 transition focus:border-gray-500"
-                required
-                min="0"
+                placeholder="Deductions"
+                className="input"
+                {...register("deductions", {
+                  valueAsNumber: true,
+                })}
               />
+              {errors.deductions && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.deductions.message}
+                </p>
+              )}
             </div>
 
             {/* Pay date */}
@@ -251,18 +230,22 @@ const AddSalary = () => {
               </label>
               <input
                 type="date"
-                name="payDate"
-                value={salary.payDate}
-                onChange={handleChange}
                 id="payDate"
                 className="mt-1 block w-full rounded-md border border-gray-300 p-2 transition focus:border-gray-500"
-                required
+                {...register("payDate")}
               />
+              {errors.payDate && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.payDate.message}
+                </p>
+              )}
             </div>
           </div>
 
           <div className="mt-7 text-center">
-            <Btn type="submit" className="px-7">Add Salary</Btn>
+            <Btn type="submit" className="px-7" disabled={isSubmitting}>
+              {isSubmitting ? "Adding..." : "Add Salary"}
+            </Btn>
           </div>
         </form>
       )}

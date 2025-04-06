@@ -40,8 +40,6 @@ const AttendanceReport = () => {
           },
         },
       );
-
-      console.log(response.data.groupData);
       if (response.data.success) {
         if (skip === 0) {
           setReport(response.data.groupData);
@@ -104,10 +102,10 @@ const AttendanceReport = () => {
         ) : (
           Object.entries(report).map(([date, record]) => {
             return (
-              <div key={date} className="my-3 border-b pb-3 lg:my-5">
+              <div key={date} className="my-3 border-b pb-3 overflow-x-auto  max-sm:max-w-[70vw] max-md:max-w-[75vw]">
                 <h4 className="mb-3 text-xl font-semibold">{date}</h4>
                 <table
-                  className="w-full text-center"
+                  className=" text-center max-md:min-w-[600px] md:w-full overflow-x-auto"
                   border={1}
                   cellPadding={10}
                 >
