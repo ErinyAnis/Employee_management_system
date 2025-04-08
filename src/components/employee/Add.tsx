@@ -78,7 +78,7 @@ const Add = () => {
       );
 
       if (response.data.success) {
-        toast.success("Employee added successfully")
+        toast.success("Employee added successfully");
         navigate("/admin-dashboard/employees");
       }
     } catch (error) {
@@ -88,249 +88,253 @@ const Add = () => {
 
   return (
     <Container className="mx-5 mt-8 max-w-4xl rounded-md bg-white p-8 shadow-md">
-      <h2 className="mb-6 text-2xl font-bold">Add New Employee</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {/* Name */}
-          <div>
-            <label htmlFor="name" className="label">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              placeholder="Insert Name"
-              className="input"
-              {...register("name")}
-            />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
-            )}
-          </div>
-
-          {/* Email */}
-          <div>
-            <label htmlFor="email" className="label">
-              Email
-            </label>
-            <input
-              {...register("email")}
-              type="email"
-              id="email"
-              placeholder="Insert Email"
-              className="input"
-            />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-
-          {/* Employee ID */}
-          <div>
-            <label htmlFor="employeeId" className="label">
-              Employee ID
-            </label>
-            <input
-              {...register("employeeId")}
-              type="text"
-              id="employeeId"
-              placeholder="Emplyee ID"
-              className="input"
-            />
-            {errors.employeeId && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.employeeId.message}
-              </p>
-            )}
-          </div>
-
-          {/* Date of birth */}
-          <div>
-            <label htmlFor="dob" className="label">
-              Date Of Birth
-            </label>
-            <input
-              {...register("dob")}
-              type="date"
-              id="dob"
-              placeholder="DOB"
-              className="input"
-            />
-            {errors.dob && (
-              <p className="mt-1 text-sm text-red-500">{errors.dob.message}</p>
-            )}
-          </div>
-
-          {/* Gender */}
-          <div>
-            <label htmlFor="gender" className="label">
-              Gender
-            </label>
-            <select {...register("gender")} id="gender" className="select">
-              <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-            {errors.gender && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.gender.message}
-              </p>
-            )}
-          </div>
-
-          {/* Marital Status */}
-          <div>
-            <label htmlFor="maritalStatus" className="label">
-              Marital Status
-            </label>
-            <select
-              {...register("maritalStatus")}
-              id="maritalStatus"
-              className="select"
-            >
-              <option value="">Select Status</option>
-              <option value="single">Single</option>
-              <option value="married">Married</option>
-            </select>
-            {errors.maritalStatus && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.maritalStatus.message}
-              </p>
-            )}
-          </div>
-
-          {/* Designation */}
-          <div>
-            <label htmlFor="designation" className="label">
-              Designation
-            </label>
-            <input
-              {...register("designation")}
-              type="text"
-              id="designation"
-              placeholder="Designation"
-              className="input"
-            />
-            {errors.designation && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.designation.message}
-              </p>
-            )}
-          </div>
-
-          {/* Department */}
-          <div>
-            <label htmlFor="department" className="label">
-              Department
-            </label>
-            <select
-              {...register("department")}
-              id="department"
-              className="select"
-            >
-              <option value="">Select Department</option>
-              {departments?.length > 0 ? (
-                departments.map((dep) => (
-                  <option key={dep._id} value={dep._id}>
-                    {dep.dep_name}
-                  </option>
-                ))
-              ) : (
-                <option disabled>No department available</option>
+      <div className="mx-auto">
+        <h2 className="mb-6 text-2xl font-bold">Add New Employee</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            {/* Name */}
+            <div>
+              <label htmlFor="name" className="label">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                placeholder="Insert Name"
+                className="input"
+                {...register("name")}
+              />
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.name.message}
+                </p>
               )}
-            </select>
-            {errors.department && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.department.message}
-              </p>
-            )}
-          </div>
+            </div>
 
-          {/* Salary */}
-          <div>
-            <label htmlFor="salary" className="label">
-              Salary
-            </label>
-            <input
-              {...register("salary")}
-              type="number"
-              id="salary"
-              placeholder="Salary"
-              className="input"
-            />
-            {errors.salary && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.salary.message}
-              </p>
-            )}
-          </div>
+            {/* Email */}
+            <div>
+              <label htmlFor="email" className="label">
+                Email
+              </label>
+              <input
+                {...register("email")}
+                type="email"
+                id="email"
+                placeholder="Insert Email"
+                className="input"
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-          {/* Password */}
-          <div>
-            <label htmlFor="password" className="label">
-              Password
-            </label>
-            <input
-              {...register("password")}
-              type="password"
-              id="password"
-              placeholder="********"
-              className="input"
-            />
-            {errors.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
+            {/* Employee ID */}
+            <div>
+              <label htmlFor="employeeId" className="label">
+                Employee ID
+              </label>
+              <input
+                {...register("employeeId")}
+                type="text"
+                id="employeeId"
+                placeholder="Emplyee ID"
+                className="input"
+              />
+              {errors.employeeId && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.employeeId.message}
+                </p>
+              )}
+            </div>
 
-          {/* Role */}
-          <div>
-            <label htmlFor="role" className="label">
-              Role
-            </label>
-            <select {...register("role")} id="role" className="select">
-              <option value="">Select Role</option>
-              <option value="admin">Admin</option>
-              <option value="employee">Employee</option>
-            </select>
-            {errors.role && (
-              <p className="mt-1 text-sm text-red-500">{errors.role.message}</p>
-            )}
-          </div>
+            {/* Date of birth */}
+            <div>
+              <label htmlFor="dob" className="label">
+                Date Of Birth
+              </label>
+              <input
+                {...register("dob")}
+                type="date"
+                id="dob"
+                placeholder="DOB"
+                className="input"
+              />
+              {errors.dob && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.dob.message}
+                </p>
+              )}
+            </div>
 
-          {/* Image Upload */}
-          <div className="w-full">
-            <label htmlFor="image" className="label">
-              Upload Image
-            </label>
+            {/* Gender */}
+            <div>
+              <label htmlFor="gender" className="label">
+                Gender
+              </label>
+              <select {...register("gender")} id="gender" className="select">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              {errors.gender && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.gender.message}
+                </p>
+              )}
+            </div>
 
-            <input
-              type="file"
-              id="image"
-              accept="image/*"
-              className="input cursor-pointer"
-              onChange={handleImageChange}
-            />
-            {errors.image && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.image.message}
-              </p>
-            )}
+            {/* Marital Status */}
+            <div>
+              <label htmlFor="maritalStatus" className="label">
+                Marital Status
+              </label>
+              <select
+                {...register("maritalStatus")}
+                id="maritalStatus"
+                className="select"
+              >
+                <option value="">Select Status</option>
+                <option value="single">Single</option>
+                <option value="married">Married</option>
+              </select>
+              {errors.maritalStatus && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.maritalStatus.message}
+                </p>
+              )}
+            </div>
+
+            {/* Designation */}
+            <div>
+              <label htmlFor="designation" className="label">
+                Designation
+              </label>
+              <input
+                {...register("designation")}
+                type="text"
+                id="designation"
+                placeholder="Designation"
+                className="input"
+              />
+              {errors.designation && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.designation.message}
+                </p>
+              )}
+            </div>
+
+            {/* Department */}
+            <div>
+              <label htmlFor="department" className="label">
+                Department
+              </label>
+              <select
+                {...register("department")}
+                id="department"
+                className="select"
+              >
+                <option value="">Select Department</option>
+                {departments?.length > 0 ? (
+                  departments.map((dep) => (
+                    <option key={dep._id} value={dep._id}>
+                      {dep.dep_name}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>No department available</option>
+                )}
+              </select>
+              {errors.department && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.department.message}
+                </p>
+              )}
+            </div>
+
+            {/* Salary */}
+            <div>
+              <label htmlFor="salary" className="label">
+                Salary
+              </label>
+              <input
+                {...register("salary")}
+                type="number"
+                id="salary"
+                placeholder="Salary"
+                className="input"
+              />
+              {errors.salary && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.salary.message}
+                </p>
+              )}
+            </div>
+
+            {/* Password */}
+            <div>
+              <label htmlFor="password" className="label">
+                Password
+              </label>
+              <input
+                {...register("password")}
+                type="password"
+                id="password"
+                placeholder="********"
+                className="input"
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {/* Role */}
+            <div>
+              <label htmlFor="role" className="label">
+                Role
+              </label>
+              <select {...register("role")} id="role" className="select">
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="employee">Employee</option>
+              </select>
+              {errors.role && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.role.message}
+                </p>
+              )}
+            </div>
+
+            {/* Image Upload */}
+            <div className="w-full">
+              <label htmlFor="image" className="label">
+                Upload Image
+              </label>
+
+              <input
+                type="file"
+                id="image"
+                accept="image/*"
+                className="input cursor-pointer"
+                onChange={handleImageChange}
+              />
+              {errors.image && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.image.message}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="mt-7 text-center">
-          <Btn
-            type="submit"
-            className="px-8"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Adding..." : "Add Employee"}
-          </Btn>
-        </div>
-      </form>
+          <div className="mt-7 text-center">
+            <Btn type="submit" className="px-8" disabled={isSubmitting}>
+              {isSubmitting ? "Adding..." : "Add Employee"}
+            </Btn>
+          </div>
+        </form>
+      </div>
     </Container>
   );
 };
