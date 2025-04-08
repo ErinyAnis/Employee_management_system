@@ -21,7 +21,7 @@ const AttendanceReport = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  const limit = 3;
+  const limit = 5;
 
   const fetchReport = async () => {
     setLoading(true);
