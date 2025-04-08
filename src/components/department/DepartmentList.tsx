@@ -95,7 +95,7 @@ const DepartmentList = () => {
             addURL="/admin-dashboard/departments/add-department"
             inputPlaceholder="Search by dep name"
           />
-          <div className="mx-auto mt-5 overflow-x-auto sm:max-w-[86vw] md:max-w-[88vw] lg:max-w-[75vw] xl:max-w-[90vw]">
+          <div className="mx-auto mt-5 max-w-[80vw] overflow-x-auto sm:max-w-[86vw] md:max-w-[88vw] lg:max-w-[75vw] xl:max-w-[90vw]">
             <DataTable
               columns={getColumns(onDepartmentDelete)}
               data={filteredDepartments}

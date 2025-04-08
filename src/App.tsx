@@ -56,7 +56,7 @@ function App() {
               element={<AddDepartment />}
             ></Route>
             <Route
-              path="/admin-dashboard/department/:id"
+              path="/admin-dashboard/departments/:id"
               element={<EditDepartment />}
             ></Route>
 
@@ -86,7 +86,7 @@ function App() {
               element={<Detail />}
             ></Route>
             <Route
-              path="/admin-dashboard/employees/leaves/:id"
+              path="/admin-dashboard/employee/leaves/:id"
               element={<LeaveList />}
             ></Route>
 

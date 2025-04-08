@@ -72,7 +72,7 @@ const EditDepartment = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="mx-auto mt-10 w-96 max-w-3xl rounded-md bg-white p-8 shadow-md">
+        <div className="mx-auto mt-10 max-w-96 lg:max-w-[500px] rounded-md bg-white p-6 lg:p-8 shadow-md">
           <h2 className="mb-6 text-2xl font-bold">Edit Department</h2>
           <form onSubmit={handleSubmit} className="space-y-3">
             <div>

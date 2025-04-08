@@ -71,7 +71,7 @@ export const EmployeeButtons = ({ id }: { id: string }) => {
       </Btn>
       <Btn
         className="bg-red-600 hover:bg-red-700"
-        onClick={() => navigate(`/admin-dashboard/employees/leaves/${id}`)}
+        onClick={() => navigate(`/admin-dashboard/employee/leaves/${id}`)}
       >
         Leave
       </Btn>

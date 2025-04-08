@@ -12,7 +12,7 @@ type Tattendance = {
     employeeId: string;
     department: { dep_name: string };
     userId: { name: string };
-  };
+  } | null; // Make employeeId nullable
   status: "Present" | "Absent" | "Sick" | "Leave" | null;
 };
 
@@ -25,13 +25,13 @@ export type TattendaceData = {
 };
 
 const Attendance = () => {
-  const [attendance, setAttendance] = useState([]);
+  const [attendance, setAttendance] = useState<TattendaceData[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filteredAttendance, setFilteredAttendance] = useState([]);
+  const [filteredAttendance, setFilteredAttendance] = useState<TattendaceData[]>([]);
 
-  const statusChange=()=> {
-    fetchAttendance()
-  }
+  const statusChange = () => {
+    fetchAttendance();
+  };
 
   const fetchAttendance = async () => {
     setLoading(true);
@@ -47,19 +47,21 @@ const Attendance = () => {
 
       if (response.data.success) {
         let sno = 1;
-        const data = response.data.attendance.map((att: Tattendance) => ({
-          employeeId: att.employeeId?.employeeId || "N/A",
-          sno: sno++,
-          department: att.employeeId?.department?.dep_name || "N/A",
-          name: att.employeeId?.userId?.name || "N/A",
-          action: (
-            <AttendanceActionButtons
-              status={att.status}
-              employeeId={att.employeeId.employeeId}
-              statusChange={statusChange}
-            />
-          ),
-        }));
+        const data = response.data.attendance
+          .filter((att: Tattendance) => att.employeeId !== null) // Filter out null employeeIds
+          .map((att: Tattendance) => ({
+            employeeId: att.employeeId?.employeeId || "N/A",
+            sno: sno++,
+            department: att.employeeId?.department?.dep_name || "N/A",
+            name: att.employeeId?.userId?.name || "N/A",
+            action: (
+              <AttendanceActionButtons
+                status={att.status}
+                employeeId={att.employeeId?.employeeId || ""}
+                statusChange={statusChange}
+              />
+            ),
+          }));
         setAttendance(data);
         setFilteredAttendance(data);
       }
@@ -79,15 +81,11 @@ const Attendance = () => {
     const searchTerm = e.target.value.toLowerCase();
     const records = attendance.filter(
       (item: TattendaceData) =>
-        item.name.toLowerCase().includes(searchTerm) || // Check name
-        item.employeeId.toLowerCase().includes(searchTerm), // Check employeeId
+        item.name.toLowerCase().includes(searchTerm) ||
+        item.employeeId.toLowerCase().includes(searchTerm),
     );
     setFilteredAttendance(records);
   };
-
-  if (!filteredAttendance) {
-    return <div>No Result</div>;
-  }
 
   return (
     <Container>

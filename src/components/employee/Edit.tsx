@@ -123,7 +123,7 @@ const Edit = () => {
 
   return (
     <Container className="mt-5">
-      <div className="mx-5 max-w-4xl rounded-md bg-white p-8 shadow-md">
+      <div className="lg:max-w-[800px] rounded-md bg-white p-8 shadow-md mx-auto">
         {loading ? (
           <div>Loading...</div>
         ) : employee ? (

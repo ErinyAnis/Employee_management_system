@@ -57,8 +57,10 @@ const AddDepartment = () => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div className="mx-auto mt-10 w-96 max-w-3xl rounded-md bg-white p-8 shadow-md">
-          <h2 className="mb-6 text-2xl font-bold">Add New Department</h2>
+        <div className="mx-auto mt-10 max-w-96 rounded-md bg-white p-8 shadow-md lg:max-w-[500px]">
+          <h2 className="mb-6 text-lg font-bold lg:text-2xl">
+            Add New Department
+          </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
             <div>
               <label htmlFor="dep_name" className="label">

@@ -41,7 +41,7 @@ const View = () => {
       ) : (
         <>
           {/* img */}
-          <div className="mx-auto mt-10 max-w-3xl rounded-md bg-white p-8 shadow-md">
+          <div className="mx-auto max-w-3xl rounded-md bg-white p-8 shadow-md lg:mt-10">
             <h2 className="mb-8 text-center text-2xl font-bold">
               Employee Details
             </h2>
@@ -49,7 +49,7 @@ const View = () => {
               <img
                 src={`${import.meta.env.VITE_BACKEND_URL}/${employee?.userId?.profileImage}`}
                 alt={employee?.userId?.name}
-                className="h-[300px] object-cover object-top max-md:mx-auto max-md:w-[300px] md:h-[400px] md:w-full"
+                className="h-[230px] object-cover object-top max-md:mx-auto max-md:w-[300px] md:h-[400px] md:w-full"
               />
 
               <div className="max-md:mx-auto">

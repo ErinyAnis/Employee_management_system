@@ -45,7 +45,7 @@ const DepartmentButtons = ({ _id, onDepartmentDelete }: IProps) => {
 
   return (
     <div className="flex flex-1 items-center gap-3 justify-center min-w-[100px]">
-      <Btn onClick={() => navigate(`/admin-dashboard/department/${_id}`)}>
+      <Btn onClick={() => navigate(`/admin-dashboard/departments/${_id}`)}>
         Edit
       </Btn>
       <Btn
