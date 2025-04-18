@@ -12,7 +12,7 @@ type Tattendance = {
     employeeId: string;
     department: { dep_name: string };
     userId: { name: string };
-  } | null; // Make employeeId nullable
+  } | null; 
   status: "Present" | "Absent" | "Sick" | "Leave" | null;
 };
 
@@ -48,7 +48,7 @@ const Attendance = () => {
       if (response.data.success) {
         let sno = 1;
         const data = response.data.attendance
-          .filter((att: Tattendance) => att.employeeId !== null) // Filter out null employeeIds
+          .filter((att: Tattendance) => att.employeeId !== null)
           .map((att: Tattendance) => ({
             employeeId: att.employeeId?.employeeId || "N/A",
             sno: sno++,

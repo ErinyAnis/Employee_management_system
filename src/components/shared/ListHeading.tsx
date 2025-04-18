@@ -44,7 +44,7 @@ const ListHeading = ({
 
         {attendance && (
           <h2 className="text-lg font-semibold lg:text-xl">
-            Mark Attendance for
+            Attendance for
             <span className="text-gray-600 ml-2">{new Date().toISOString().split("T")[0]}</span>
           </h2>
         )}
