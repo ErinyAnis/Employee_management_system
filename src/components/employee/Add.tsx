@@ -87,7 +87,7 @@ const Add = () => {
   };
 
   return (
-    <Container className="mx-5 mt-8 max-w-4xl rounded-md bg-white p-8 shadow-md">
+    <Container className="mx-5 mt-8 rounded-md bg-white p-8 shadow-md ">
       <div className="mx-auto">
         <h2 className="mb-6 text-2xl font-bold">Add New Employee</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
