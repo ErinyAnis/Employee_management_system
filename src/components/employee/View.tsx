@@ -47,7 +47,7 @@ const View = () => {
             </h2>
             <div className="grid items-center gap-5 rounded md:grid-cols-2 lg:gap-8">
               <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/${employee?.userId?.profileImage}`}
+                src={employee?.userId?.profileImage}
                 alt={employee?.userId?.name}
                 className="h-[230px] object-cover object-top max-md:mx-auto max-md:w-[300px] md:h-[400px] md:w-full"
               />

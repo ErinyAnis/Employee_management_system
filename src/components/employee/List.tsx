@@ -35,7 +35,7 @@ const List = () => {
           profileImage: (
             <img
               className="h-14 w-14 rounded object-cover object-top py-1 lg:h-20 lg:w-20"
-              src={`${import.meta.env.VITE_BACKEND_URL}/${emp.userId?.profileImage}`}
+              src={emp.userId?.profileImage}
               alt={emp.userId?.name}
             />
           ),

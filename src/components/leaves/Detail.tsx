@@ -10,7 +10,7 @@ const Detail = () => {
   const { id } = useParams<{ id: string }>();
   const [leave, setLeave] = useState<Leave | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLeave = async () => {
@@ -43,7 +43,7 @@ const Detail = () => {
     try {
       const response = await axios.put(
         `${import.meta.env.VITE_BACKEND_URL}/api/leave/${id}`,
-        {status},
+        { status },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -51,7 +51,7 @@ const Detail = () => {
         },
       );
       if (response.data.success) {
-        navigate("/admin-dashboard/leaves")
+        navigate("/admin-dashboard/leaves");
       }
     } catch (error) {
       console.error(error);
@@ -74,7 +74,7 @@ const Detail = () => {
             </h2>
             <div className="grid items-center gap-5 rounded md:grid-cols-2 lg:gap-8">
               <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/${leave?.employeeId?.userId?.profileImage}`}
+                src={leave?.employeeId?.userId?.profileImage}
                 alt={leave?.employeeId?.userId?.name}
                 className="h-[300px] object-cover object-top max-md:mx-auto max-md:w-[300px] md:h-[400px] md:w-full"
               />
