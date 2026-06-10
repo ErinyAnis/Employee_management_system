@@ -45,7 +45,9 @@ const ListHeading = ({
         {attendance && (
           <h2 className="text-lg font-semibold lg:text-xl">
             Attendance for
-            <span className="text-gray-600 ml-2">{new Date().toISOString().split("T")[0]}</span>
+            <span className="ml-2 text-gray-600">
+              {new Date().toISOString().split("T")[0]}
+            </span>
           </h2>
         )}
 
@@ -77,7 +79,7 @@ const ListHeading = ({
           >
             {addTitle}
           </Link>
-        ) : (
+        ) : LeaveDiableBtnForAdmin && user?.role === "admin" ? null : (
           <Link
             to={addURL}
             className="rounded bg-teal-600 px-3 py-2 text-white transition hover:bg-teal-700 max-md:text-sm lg:px-5"
